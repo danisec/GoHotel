@@ -19,12 +19,12 @@ export default function Search() {
 
   const formatDateCheckin = () => {
     const date = new Date(checkin);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   };
 
   const formatDateCheckout = () => {
     const date = new Date(checkout);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   };
 
   return (
