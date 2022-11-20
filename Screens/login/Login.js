@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-const Login = () => {
+export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigation();
 
@@ -32,11 +32,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (user !== null) {
-      navigate.navigate('Home');
-    } else {
-      navigate.navigate('Account');
-    }
+    user !== null ? navigate.navigate('Home') : navigate.navigate('Account');
   }, [user, navigate]);
 
   return (
@@ -80,6 +76,4 @@ const Login = () => {
       </View>
     </SafeAreaView>
   );
-};
-
-export default Login;
+}
