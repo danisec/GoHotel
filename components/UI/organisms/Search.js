@@ -17,6 +17,16 @@ export default function Search() {
   const [openCheckin, setOpenCheckin] = useState(false);
   const [openCheckout, setOpenCheckout] = useState(false);
 
+  const formatDateCheckin = () => {
+    const date = new Date(checkin);
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  };
+
+  const formatDateCheckout = () => {
+    const date = new Date(checkout);
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  };
+
   return (
     <SafeAreaView className="bg-gray-100/30 mx-2 shadow-sm rounded-md shadow-gray-200">
       <View className="m-3">
@@ -36,7 +46,7 @@ export default function Search() {
               onPress={() => setOpenCheckin(true)}>
               <Icon name="date-range" size={25} color="#A1A1A1" />
               <Text className="text-gray-900 text-base ml-2">
-                {checkin.toDateString()}
+                {formatDateCheckin()}
               </Text>
             </TouchableOpacity>
 
@@ -60,7 +70,7 @@ export default function Search() {
               onPress={() => setOpenCheckout(true)}>
               <Icon name="date-range" size={25} color="#A1A1A1" />
               <Text className="text-gray-900 text-base ml-2">
-                {checkout.toDateString()}
+                {formatDateCheckout()}
               </Text>
             </TouchableOpacity>
 
