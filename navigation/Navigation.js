@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -6,10 +7,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Home from '../Screens/home/Home';
 import Favorites from '../Screens/favorites/Favorites';
 import Profile from '../Screens/profile/Profile';
+import Login from '../Screens/login/Login';
 
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
+  const {user} = useSelector(state => state.auth);
+
   return (
     <NavigationContainer>
       <Tab.Navigator>
@@ -32,9 +36,9 @@ export default function Navigation() {
 
         <Tab.Screen
           name="Favorites"
-          component={Favorites}
+          component={user ? Favorites : Login}
           options={{
-            headerShown: true,
+            headerShown: user ? true : false,
             tabBarLabel: 'Favorites',
             headerTitle: 'Favorites',
             headerTitleAlign: 'center',
@@ -48,16 +52,16 @@ export default function Navigation() {
         />
 
         <Tab.Screen
-          name="Account"
-          component={Profile}
+          name={user ? 'Profile' : 'Account'}
+          component={user ? Profile : Login}
           options={{
-            headerShown: true,
+            headerShown: user ? true : false,
             headerTitle: 'Profile',
             headerTitleAlign: 'center',
             headerStyle: {
               backgroundColor: '#FFF',
             },
-            tabBarLabel: 'Account',
+            tabBarLabel: user ? 'Profile' : 'Account',
             tabBarIcon: ({color, size}) => (
               <Icon name="person" color={color} size={size} />
             ),
