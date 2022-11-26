@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 
 const token = 'WuieWUNOPP9893nn89';
 
@@ -52,7 +53,10 @@ const authSlice = createSlice({
       })
       .addCase(authUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          textBody: action.error.message,
+        });
       });
   },
 });
