@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {authUser} from '../../src/features/auth/authSlice';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   SafeAreaView,
   View,
@@ -16,8 +17,14 @@ export default function Login() {
 
   const {user, status} = useSelector(state => state.auth);
 
+  const [secureText, setSecureText] = useState(false);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const secureTextHandler = () => {
+    setSecureText(!secureText);
+  };
 
   const emailHandler = text => {
     setEmail(text);
@@ -59,9 +66,18 @@ export default function Login() {
         <TextInput
           className="border border-gray-100 rounded-md p-2 w-3/4"
           placeholder="Password"
-          secureTextEntry={true}
+          secureTextEntry={secureText ? false : true}
           onChangeText={passwordHandler}
         />
+
+        <TouchableHighlight className="absolute mt-3 right-14">
+          <Icon
+            name={secureText === false ? 'visibility' : 'visibility-off'}
+            size={20}
+            color="#000"
+            onPress={secureTextHandler}
+          />
+        </TouchableHighlight>
       </View>
 
       <View className="flex flex-row justify-center mt-4">
