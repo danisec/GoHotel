@@ -1,9 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 const initialState = {
-  loading: false,
   hotels: [],
-  error: '',
+  status: 'idle',
+  error: null,
 };
 
 export const fetchHotels = createAsyncThunk(`hotel/fetchHotels`, async () => {
@@ -18,26 +18,21 @@ export const fetchHotels = createAsyncThunk(`hotel/fetchHotels`, async () => {
     },
   );
   const datas = await data.json();
-  return datas?.getHotelAutoSuggestV2?.results?.result?.hotels;
+  return datas?.getHotelAutoSuggestV2?.results?.result?.hotels.hotel_0;
 });
 
 const hotelSlice = createSlice({
   name: 'hotel',
   initialState,
   extraReducers: builder => {
-    builder.addCase(fetchHotels.pending, state => {
-      state.loading = true;
-    });
-    builder.addCase(fetchHotels.fulfilled, (state, action) => {
-      (state.loading = false),
-        (state.hotels = action.payload),
-        (state.error = '');
-    });
-    builder.addCase(fetchHotels.rejected, (state, action) => {
-      (state.loading = false),
-        (state.hotels = []),
-        (state.error = action.error.message);
-    });
+    builder
+      .addCase(fetchHotels.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(fetchHotels.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.hotels = state.hotels.concat(action.payload);
+      });
   },
 });
 
