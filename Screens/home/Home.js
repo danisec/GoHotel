@@ -25,13 +25,15 @@ export default function Home() {
   // console.log(typeof dataH, 'data API hh');
 
   // dataHotels ? Object.keys(dataHotels) : console.log('object is falsy');
-  const hotel = useSelector(state => state.hotels);
   const dispatch = useDispatch();
+  const {hotels} = useSelector(state => state.api);
+
   useEffect(() => {
     dispatch(fetchHotels());
   }, [dispatch]);
 
-  console.log(hotel, 'ini data hotel');
+  console.log(hotels, 'ini data hotel');
+
   const Item = ({item}) => {
     return (
       <View>
