@@ -32,23 +32,22 @@ export default function Home() {
     dispatch(fetchHotels());
   }, [dispatch]);
 
-  console.log(hotels, 'ini data hotel');
-
-  const Item = ({item}) => {
-    return (
-      <View>
-        <Text>{item.hotel_name}</Text>
-      </View>
-    );
-  };
+  console.log('data API', hotels);
 
   return (
     <SafeAreaView className="bg-white flex-1">
       <FlatList
-        className="bg-red-200"
-        // data={Object.keys(dataHotels)}
-        renderItem={Item}
-        keyExtractor={(item, index) => index.toString()}
+        data={hotels}
+        renderItem={({item}) => (
+          <View>
+            <Image
+              source={{uri: `https:${item.thumbnail}`}}
+              style={{width: 100, height: 100}}
+            />
+
+            <Text>{item.hotel_name}</Text>
+          </View>
+        )}
       />
 
       {/* <ScrollView>
