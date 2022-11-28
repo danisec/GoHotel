@@ -1,5 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
+const API =
+  'https://priceline-com-provider.p.rapidapi.com/v2/hotels/autoSuggest?string=New%20York&get_pois=true&combine_regions=true&get_hotels=true&get_airports=true&show_all_cities=true&get_regions=true&get_cities=true';
+
 const initialState = {
   hotels: [],
   status: 'idle',
@@ -7,18 +10,20 @@ const initialState = {
 };
 
 export const fetchHotels = createAsyncThunk(`hotel/fetchHotels`, async () => {
-  const data = await fetch(
-    'https://priceline-com-provider.p.rapidapi.com/v2/hotels/autoSuggest?string=new%20york&get_pois=true&combine_regions=true&get_hotels=true&get_airports=true&show_all_cities=true&get_regions=true&get_cities=true',
-    {
+  try {
+    const res = await fetch(API, {
       method: 'GET',
       headers: {
-        'x-rapidapi-key': '2d7743f4d2mshf45cc90e6b351d9p1b0197jsn637cd277910a',
-        'x-rapidapi-host': 'priceline-com-provider.p.rapidapi.com',
+        'X-RapidAPI-Key': 'd1cf891ec2mshbd2acf62e8981ffp11c823jsn5040f694a943',
+        'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com',
       },
-    },
-  );
-  const datas = await data.json();
-  return datas?.getHotelAutoSuggestV2?.results?.result?.hotels.hotel_0;
+    });
+
+    const data = await res.json();
+    return data.getHotelAutoSuggestV2.results.result.hotels.hotel_0;
+  } catch (e) {
+    throw new Error(e);
+  }
 });
 
 const hotelSlice = createSlice({
