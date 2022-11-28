@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
   const {user} = useSelector(state => state.auth);
-
+  console.log(user);
   return (
     <NavigationContainer>
       <Tab.Navigator>

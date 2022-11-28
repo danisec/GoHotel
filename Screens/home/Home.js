@@ -1,11 +1,55 @@
-import React from 'react';
-import {SafeAreaView, ScrollView, View, Text, Image} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  Image,
+  FlatList,
+} from 'react-native';
 import Search from '../../components/UI/organisms/Search';
+// import {UseGetDataBySuggest} from '../../src/features/api/apiSliceQuery';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchHotels} from '../../src/features/api/apiSliceRedux';
 
 export default function Home() {
+  // const {data, isLoading} = UseGetDataBySuggest();
+  // const dataHotels = data?.getHotelAutoSuggestV2?.results?.result?.hotels;
+
+  // let myKeys = Object?.values(dataHotels);
+  // console.log(myKeys);
+
+  // console.log(typeof dataHotels, 'data API  h');
+  // console.log(dataHotels, 'data API  h');
+  // console.log(dataH, 'data API');
+  // console.log(typeof dataH, 'data API hh');
+
+  // dataHotels ? Object.keys(dataHotels) : console.log('object is falsy');
+  const hotel = useSelector(state => state.hotels);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchHotels());
+  }, [dispatch]);
+
+  console.log(hotel, 'ini data hotel');
+  const Item = ({item}) => {
+    return (
+      <View>
+        <Text>{item.hotel_name}</Text>
+      </View>
+    );
+  };
+
   return (
-    <SafeAreaView className="bg-white">
-      <ScrollView>
+    <SafeAreaView className="bg-white flex-1">
+      <FlatList
+        className="bg-red-200"
+        // data={Object.keys(dataHotels)}
+        renderItem={Item}
+        keyExtractor={(item, index) => index.toString()}
+      />
+
+      {/* <ScrollView>
         <View className="mt-4">
           <Search />
         </View>
@@ -95,7 +139,7 @@ export default function Home() {
             </View>
           </View>
         </ScrollView>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 }

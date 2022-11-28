@@ -9,14 +9,22 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-date-picker';
-
 export default function Search() {
   const [checkin, setCheckin] = useState(new Date());
   const [checkout, setCheckout] = useState(new Date());
-
   const [openCheckin, setOpenCheckin] = useState(false);
   const [openCheckout, setOpenCheckout] = useState(false);
+  console.log(checkin);
 
+  const formatDateCheckin = () => {
+    const date = new Date(checkin);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  };
+
+  const formatDateCheckout = () => {
+    const date = new Date(checkout);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  };
   return (
     <SafeAreaView className="bg-gray-100/30 mx-2 shadow-sm rounded-md shadow-gray-200">
       <View className="m-3">
@@ -36,16 +44,19 @@ export default function Search() {
               onPress={() => setOpenCheckin(true)}>
               <Icon name="date-range" size={25} color="#A1A1A1" />
               <Text className="text-gray-900 text-base ml-2">
-                {checkin.toDateString()}
+                {formatDateCheckin()}
               </Text>
             </TouchableOpacity>
 
             <DatePicker
               modal
+              minimumDate={checkin}
+              mode="date"
               open={openCheckin}
               date={checkin}
               onConfirm={date => {
                 setOpenCheckin(false);
+
                 setCheckin(date);
               }}
               onCancel={() => {
@@ -60,12 +71,14 @@ export default function Search() {
               onPress={() => setOpenCheckout(true)}>
               <Icon name="date-range" size={25} color="#A1A1A1" />
               <Text className="text-gray-900 text-base ml-2">
-                {checkout.toDateString()}
+                {formatDateCheckout()}
               </Text>
             </TouchableOpacity>
 
             <DatePicker
               modal
+              minimumDate={checkout}
+              mode="date"
               open={openCheckout}
               date={checkout}
               onConfirm={date => {
