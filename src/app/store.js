@@ -7,6 +7,7 @@ import searchHotelReducer from '../features/hotel/searchHotelSlice';
 import detailHotelReducer from '../features/detail-hotel/detailHotelSlice';
 import bookingReducer from '../features/booking/bookingSlice';
 import favoritesReducer from '../features/favorites/favoritesSlice';
+import profileReducer from '../features/profile/profileSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     detail: detailHotelReducer,
     booking: bookingReducer,
     favorites: favoritesReducer,
+    profile: profileReducer,
   },
 
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
